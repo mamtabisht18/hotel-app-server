@@ -11,6 +11,7 @@ import {
   hotels,
   image,
   sellerHotels,
+  bookHotel,
   remove,
   read,
   update,
@@ -34,6 +35,7 @@ router.put(
 );
 // orders
 router.get("/user-hotel-bookings", requireSignin, userHotelBookings);
+router.post("/book-hotel", requireSignin, bookHotel);
 router.get("/is-already-booked/:hotelId", requireSignin, isAlreadyBooked);
 router.post("/search-listings", searchListings);
 

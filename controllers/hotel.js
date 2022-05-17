@@ -2,6 +2,37 @@ import Hotel from "../models/hotel";
 import Order from "../models/order";
 import fs from "fs";
 
+export const bookHotel = async (req, res) => {
+  //   console.log("req.fields", req.fields);
+  //   console.log("req.files", req.files);
+  try {
+    // let fields = req.fields;
+    const { hotelId, amount } = req.body;
+    let order = new Order();
+    order.orderedBy = req.user._id;
+    order.hotel = hotelId;
+    order.session = {
+      "payment_intent":"PID",
+      "payment_status":"PAID",
+      "currency":"USD",
+      "amount_total":amount
+    };
+
+    order.save((err, result) => {
+      if (err) {
+        console.log("saving order err => ", err);
+        res.status(400).send("Error saving");
+      }
+      res.json(result);
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+};
+
 export const create = async (req, res) => {
   //   console.log("req.fields", req.fields);
   //   console.log("req.files", req.files);
