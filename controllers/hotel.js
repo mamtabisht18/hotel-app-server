@@ -14,7 +14,7 @@ export const bookHotel = async (req, res) => {
     order.session = {
       "payment_intent":"PID",
       "payment_status":"PAID",
-      "currency":"USD",
+      "currency":"INR",
       "amount_total":amount
     };
 
