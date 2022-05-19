@@ -26,3 +26,14 @@ export const bookCab = async (req, res) => {
       });
     }
   };
+
+
+
+  export const getBookedCabs = async (req, res) => {
+    let all = await Cab.find({ bookedBy: req.user._id })
+      .limit(24)
+      .populate("bookedBy", "_id name")
+      .exec();
+    // console.log(all);
+    res.json(all);
+  };

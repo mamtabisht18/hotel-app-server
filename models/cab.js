@@ -27,9 +27,14 @@ const cabSchema = new Schema(
       type: ObjectId,
       ref: "User",
     },   
-    // from: {
-    //   type: Date,
-    // },    
+    time: {
+      type: String,
+      required: "Time is required",
+    },
+    departureDate: {
+      type: Date,
+      required: "DepartureDate is required",
+    },    
   },
   { timestamps: true }
 );
