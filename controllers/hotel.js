@@ -160,14 +160,35 @@ export const isAlreadyBooked = async (req, res) => {
 
 export const searchListings = async (req, res) => {
   const { location, date, bed } = req.body;
-  // console.log(location, date, bed);
+  console.log(location, date, bed);
   // console.log(date);
+
+  let where = {location};
+  // {
+  //   from: { $gte: new Date(fromDate[0]) },
+  //   location,
+  // }
+
+  if(date) {
+    const fromDate = date.split(",");
+    if(fromDate && fromDate[0]) {
+      where = {...where, from: { $lte: new Date(fromDate[0]) }}
+    }
+
+    if(fromDate && fromDate[1]) {
+      where = {...where, to: { $gte: new Date(fromDate[1]) }}
+    }
+  }
+
+  
+
+  if(bed){
+    where = {...where, bed}
+  }
+
   const fromDate = date.split(",");
   // console.log(fromDate[0]);
-  let result = await Hotel.find({
-    from: { $gte: new Date(fromDate[0]) },
-    location,
-  })
+  let result = await Hotel.find(where)
     .select("-image.data")
     .exec();
   // console.log("SEARCH LISTINGS", result);
