@@ -17,6 +17,9 @@ const hotelSchema = new Schema(
     location: {
       type: String,
     },
+    amenities: {
+      type: String,
+    },
     price: {
       type: Number,
       required: "Price is required",
