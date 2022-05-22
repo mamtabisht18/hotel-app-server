@@ -7,17 +7,17 @@ export const bookHotel = async (req, res) => {
   //   console.log("req.files", req.files);
   try {
     // let fields = req.fields;
-    const { hotelId, amount } = req.body;
+    const { hotelId, amount, bookingDetails}  = req.body;
     let order = new Order();
     order.orderedBy = req.user._id;
     order.hotel = hotelId;
+    order.bookingDetails = JSON.parse(bookingDetails);
     order.session = {
       "payment_intent":"PID",
       "payment_status":"PAID",
       "currency":"INR",
       "amount_total":amount
     };
-
     order.save((err, result) => {
       if (err) {
         console.log("saving order err => ", err);
@@ -135,7 +135,7 @@ export const update = async (req, res) => {
 
 export const userHotelBookings = async (req, res) => {
   const all = await Order.find({ orderedBy: req.user._id })
-    .select("session")
+    .select("session bookingDetails")
     .populate("hotel", "-image.data")
     .populate("orderedBy", "_id name")
     .exec();
@@ -183,7 +183,7 @@ export const searchListings = async (req, res) => {
   
 
   if(bed){
-    where = {...where, bed}
+    where = {...where, bed: { $gte: bed }}
   }
 
   const fromDate = date.split(",");
