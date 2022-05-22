@@ -16,6 +16,7 @@ const hotelSchema = new Schema(
     },
     location: {
       type: String,
+      required: "Location is required",
     },
     amenities: {
       type: String,
@@ -35,12 +36,15 @@ const hotelSchema = new Schema(
     },
     from: {
       type: Date,
+      required: "From Date is required",
     },
     to: {
       type: Date,
+      required: "To Date is required",
     },
     bed: {
       type: Number,
+      required: "Bed is required",
     },
   },
   { timestamps: true }
